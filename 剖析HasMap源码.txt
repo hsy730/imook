@@ -1,0 +1,29 @@
+hashmap初始化
+
+	static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
+	static final float DEFAULT_LOAD_FACTOR = 0.75f;
+	newCap = DEFAULT_INITIAL_CAPACITY;//16
+    newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);//12
+	【问】为什么hashmap的默认大小是2的倍数？
+	
+	【答】	计算机擅长移位操作，而不擅长加减乘除。
+			申请内存时采用2的倍数可以避免内存碎片。
+			提高哈希运算的散列度。减少冲突。
+			
+	 if ((p = tab[i = (n - 1) & hash]) == null)
+	 n为hashmap的capacity，为2的倍数
+	 【例】	n=16 0001 0000
+			i=15 0000 1111
+			hash 0001 0001
+			与后 0000 0001
+	【结论】n为2的倍数，n-1低位为全1，能够有效的保留p值的特性。减少散列冲突。
+	
+	return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);//hash
+	【例】h：		10010001 10010101 10110000 11110001
+		  h>>>16:	00000000 00000000 10010001 10010101
+		  hash:		10010001 10010101 00100001 01100100
+		  n-1: 		00000000 00000000 11111111 11111111
+		  p:		00000000 00000000 00100001 01100100
+		  
+		  h:
+		  
